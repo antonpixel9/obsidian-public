@@ -66,6 +66,16 @@ jobs:
       - name: Build website
         working-directory: quartz
         run: npx quartz build
+      - name: Inline guest guide style to avoid stale cached CSS
+        working-directory: quartz
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          style = Path('../notes/site/guest.scss').read_text()
+          for page in Path('public').rglob('*.html'):
+              html = page.read_text()
+              page.write_text(html.replace('</head>', '<style>' + style + '</style></head>'))
+          PY
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
