@@ -1,0 +1,75 @@
+name: Publish Obsidian website
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout published notes
+        uses: actions/checkout@v4
+        with:
+          path: notes
+      - name: Checkout Quartz
+        uses: actions/checkout@v4
+        with:
+          repository: jackyzha0/quartz
+          ref: v4
+          path: quartz
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: quartz/package-lock.json
+      - name: Prepare website content
+        run: |
+          find quartz/content -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+          cp -a notes/content/. quartz/content/
+          if [ ! -f quartz/content/index.md ]; then
+            printf '# Заметки\n\nДобро пожаловать! Выберите заметку в списке.\n' > quartz/content/index.md
+          fi
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path("quartz/quartz.config.ts")
+          s = p.read_text()
+          s, n = re.subn(r'baseUrl:\s*["\x27][^"\x27]*["\x27]', 'baseUrl: "antonpixel9.github.io/obsidian-public"', s, count=1)
+          if n != 1:
+              raise SystemExit("Could not configure Quartz baseUrl")
+          p.write_text(s)
+          PY
+      - name: Install dependencies
+        working-directory: quartz
+        run: npm ci
+      - name: Build website
+        working-directory: quartz
+        run: npx quartz build
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: quartz/public
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
