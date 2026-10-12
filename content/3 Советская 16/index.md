@@ -8,7 +8,7 @@ title: "3-я Советская, 16"
 
 **Санкт-Петербург · Информация для гостей**
 
-[Telegram](https://t.me/AntuanTavricheskii) · [WhatsApp](https://wa.me/79668206284) · MAX
+[Telegram](https://t.me/AntuanTavricheskii) · [WhatsApp](https://wa.me/79668206284) · [MAX](https://max.ru/u/f9LHodD0cOIXBU5wrFmVoEF6VJvy5k5N8k19YDa3l1tteIQhholU1Cqk1eI)
 
 [Позвонить: +7 966 820-62-84](tel:+79668206284)
 
