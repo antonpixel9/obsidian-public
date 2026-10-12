@@ -31,3 +31,6 @@ blockquote { margin:12px 0;padding:8px 14px;border-color:#d9e1dc; }
 footer, .sidebar { display:none!important; }
 @media(min-width:800px){ .page > #quartz-body { padding-top:40px!important; } .center > article > p:first-child:has(img) img { height:200px; } }
 @media(prefers-reduced-motion:reduce){ *{scroll-behavior:auto!important;} }
+
+.center > hr, .center > .page-footer { display:none!important; }
+.center:has(article > p:first-child img) article > ul > li > a { font-weight:400; }
