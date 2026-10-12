@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - "content/**"
+      - "site/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -40,8 +41,9 @@ jobs:
         run: |
           find quartz/content -mindepth 1 -maxdepth 1 -exec rm -rf {} +
           cp -a notes/content/. quartz/content/
+          cp notes/site/quartz.layout.ts quartz/quartz.layout.ts
           if [ ! -f quartz/content/index.md ]; then
-            printf '# Заметки\n\nДобро пожаловать! Выберите заметку в списке.\n' > quartz/content/index.md
+            printf '%s\n' '---' 'title: Публикации' '---' '' 'Выберите заметку в меню.' > quartz/content/index.md
           fi
           python3 - <<'PY'
           from pathlib import Path
@@ -51,6 +53,9 @@ jobs:
           s, n = re.subn(r'baseUrl:\s*["\x27][^"\x27]*["\x27]', 'baseUrl: "antonpixel9.github.io/obsidian-public"', s, count=1)
           if n != 1:
               raise SystemExit("Could not configure Quartz baseUrl")
+          s, title_count = re.subn(r'pageTitle:\s*["\\x27][^"\\x27]*["\\x27]', 'pageTitle: "Петербург Апарт"', s, count=1)
+          if title_count != 1:
+              raise SystemExit("Could not configure Quartz page title")
           p.write_text(s)
           PY
       - name: Install dependencies
