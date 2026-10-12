@@ -58,3 +58,6 @@ body:has(.guest-home) article > ul > li > a { display:flex!important;align-items
 body:has(.guest-home) article > ul > li > a::after { content:"›";font-size:24px;color:#929a95;flex:none;margin-left:10px; }
 body:has(.guest-home) article > ul > li > a:hover { background:#f8faf8!important; }
 @media(max-width:600px) { body:has(.guest-home) .page > #quartz-body { padding:18px 18px 40px!important; } }
+
+/* Place the cover above the title even when the home marker is first. */
+body:has(.guest-home) .center > article > .guest-home + p { order:0; margin:0 0 18px!important; }
