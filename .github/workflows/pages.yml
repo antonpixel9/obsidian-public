@@ -43,7 +43,7 @@ jobs:
           cp -a notes/content/. quartz/content/
           cp notes/site/quartz.layout.ts quartz/quartz.layout.ts
           if [ ! -f quartz/content/index.md ]; then
-            printf '%s\n' '---' 'title: Публикации' '---' '' 'Выберите заметку в меню.' > quartz/content/index.md
+            printf '%s\n' '---' 'title: Петербург Апарт' '---' '' 'Информационные страницы доступны по индивидуальным ссылкам.' > quartz/content/index.md
           fi
           python3 - <<'PY'
           from pathlib import Path
@@ -56,6 +56,7 @@ jobs:
           s, title_count = re.subn(r'pageTitle:\s*["\\x27][^"\\x27]*["\\x27]', 'pageTitle: "Петербург Апарт"', s, count=1)
           if title_count != 1:
               raise SystemExit("Could not configure Quartz page title")
+          s = s.replace('Plugin.ContentIndex(),', 'Plugin.ContentIndex(),')
           p.write_text(s)
           PY
       - name: Install dependencies
