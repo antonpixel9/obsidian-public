@@ -76,6 +76,25 @@ jobs:
               html = page.read_text()
               page.write_text(html.replace('</head>', '<style>' + style + '</style></head>'))
           PY
+      - name: Redirect legacy guest guide entry to the main note
+        working-directory: quartz
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.parse import quote
+          from html import escape
+          folder = Path("public/3-Советская-16")
+          folder.mkdir(parents=True, exist_ok=True)
+          target = "../" + quote("3-Советская-16", safe="-")
+          redirect = ('<!doctype html><html lang="ru"><head><meta charset="utf-8">'
+                      '<meta name="viewport" content="width=device-width,initial-scale=1">'
+                      '<title>3 Советская 16</title>'
+                      '<link rel="canonical" href="' + escape(target, quote=True) + '">'
+                      '<meta http-equiv="refresh" content="0;url=' + escape(target, quote=True) + '">'
+                      '</head><body><a href="' + escape(target, quote=True) + '">Открыть главную заметку</a>'
+                      '</body></html>')
+          (folder / "index.html").write_text(redirect, encoding="utf-8")
+          PY
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
