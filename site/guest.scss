@@ -34,3 +34,27 @@ footer, .sidebar { display:none!important; }
 
 .center > hr, .center > .page-footer { display:none!important; }
 .center:has(article > p:first-child img) article > ul > li > a { font-weight:400; }
+
+
+/* Standalone guest guide — scoped so unrelated notes remain unchanged. */
+body:has(.guest-home) { background:#fff!important; }
+body:has(.guest-home) .page > #quartz-body { padding:20px 20px 48px!important; }
+body:has(.guest-home) .center > .page-header { margin:0 0 8px!important; }
+body:has(.guest-home) .article-title { font-size:27px!important;letter-spacing:-.6px!important;color:#202622!important; }
+body:has(.guest-home) .guest-home { display:none; }
+body:has(.guest-home) article > blockquote { margin:12px 0 18px!important;border:1px dashed #d7deda!important;border-radius:10px;background:#fafbfa!important;padding:20px!important;color:#6b756f!important;font-size:14px; }
+body:has(.guest-home) article img { display:block!important;width:100%!important;max-height:220px;aspect-ratio:16/9;object-fit:cover;border-radius:10px!important;margin:0 0 18px!important; }
+body:has(.guest-home) article > p { margin:8px 0!important; }
+body:has(.guest-home) article > p:has(a[href^="https://t.me/"]) { display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:0!important;margin:16px 0 8px!important; }
+body:has(.guest-home) article > p:has(a[href^="https://t.me/"]) a { display:inline-flex;align-items:center;justify-content:center;flex:1 1 70px;min-height:42px;border-radius:9px;background:#f3f5f3!important;color:#294b44!important;text-decoration:none!important;font-size:14px!important;font-weight:600;padding:0 10px; }
+body:has(.guest-home) article > p:has(a[href^="https://t.me/"]) a:hover { background:#e9efeb!important; }
+body:has(.guest-home) article > p:has(a[href^="tel:"]) { font-size:14px!important;margin:8px 0 24px!important; }
+body:has(.guest-home) article > p:has(a[href^="tel:"]) a { text-decoration:none!important; }
+body:has(.guest-home) article > ul { list-style:none!important;margin:22px 0 0!important;padding:0!important; }
+body:has(.guest-home) article > ul > li { list-style:none!important;margin:0!important;padding:0!important;border-bottom:1px solid #e7ebe8!important; }
+body:has(.guest-home) article > ul > li:first-child { border-top:1px solid #e7ebe8!important; }
+body:has(.guest-home) article > ul > li::marker { content:""; }
+body:has(.guest-home) article > ul > li > a { display:flex!important;align-items:center;justify-content:space-between;min-height:54px;padding:10px 2px!important;color:#202622!important;text-decoration:none!important;font-size:16px!important;font-weight:450!important;background:transparent!important; }
+body:has(.guest-home) article > ul > li > a::after { content:"›";font-size:24px;color:#929a95;flex:none;margin-left:10px; }
+body:has(.guest-home) article > ul > li > a:hover { background:#f8faf8!important; }
+@media(max-width:600px) { body:has(.guest-home) .page > #quartz-body { padding:18px 18px 40px!important; } }
