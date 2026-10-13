@@ -95,6 +95,26 @@ jobs:
                       '</body></html>')
           (folder / "index.html").write_text(redirect, encoding="utf-8")
           PY
+      - name: Add company home and short guest address
+        working-directory: quartz
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          home = Path('../notes/site/home.html')
+          if not home.is_file():
+              raise SystemExit('Missing site/home.html')
+          Path('public/index.html').write_bytes(home.read_bytes())
+          original = Path('public/3-Советская-16.html')
+          if not original.is_file():
+              raise SystemExit('Missing published 3 Советская 16 page')
+          alias = Path('public/3sovetskaya16/index.html')
+          alias.parent.mkdir(parents=True, exist_ok=True)
+          html = original.read_text(encoding='utf-8')
+          if '<head>' not in html:
+              raise SystemExit('Missing head in guest page')
+          html = html.replace('<head>', '<head><base href="../">', 1)
+          alias.write_text(html, encoding='utf-8')
+          PY
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
