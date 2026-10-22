@@ -51,7 +51,7 @@ jobs:
           import re
           p = Path("quartz/quartz.config.ts")
           s = p.read_text()
-          s, n = re.subn(r'baseUrl:\s*["\x27][^"\x27]*["\x27]', 'baseUrl: "antonpixel9.github.io/obsidian-public"', s, count=1)
+          s, n = re.subn(r'baseUrl:\s*["\x27][^"\x27]*["\x27]', 'baseUrl: "peterburgapart.ru"', s, count=1)
           if n != 1:
               raise SystemExit("Could not configure Quartz baseUrl")
           s, title_count = re.subn(r'pageTitle:\s*["\\x27][^"\\x27]*["\\x27]', 'pageTitle: "Петербург Апарт"', s, count=1)
